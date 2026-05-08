@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     const state = crypto.randomBytes(32).toString("hex")
     const { verifier, challenge } = generatePKCE()
 
-    const baseUrl = process.env.NEXTAUTH_URL || `http://localhost:${process.env.PORT || 3000}`
+    const baseUrl = (process.env.NEXTAUTH_URL || `http://localhost:${process.env.PORT || 3000}`).replace(/\/$/, "")
     const redirectUri = `${baseUrl}/api/platforms/callback/tiktok`
 
     const scopes = "user.info.basic,user.info.stats"
