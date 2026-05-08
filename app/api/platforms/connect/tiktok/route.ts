@@ -43,6 +43,20 @@ export async function GET(request: NextRequest) {
     tiktokAuthUrl.searchParams.set("code_challenge", challenge)
     tiktokAuthUrl.searchParams.set("code_challenge_method", "S256")
 
+    console.log("[TikTok OAuth] redirect_uri:", redirectUri)
+    console.log("[TikTok OAuth] full auth URL:", tiktokAuthUrl.toString())
+
+    // ?debug=1 retorna JSON em vez de redirecionar (para verificar parâmetros)
+    const debugMode = new URL(request.url).searchParams.get("debug") === "1"
+    if (debugMode) {
+      return NextResponse.json({
+        redirect_uri: redirectUri,
+        client_key: clientKey,
+        scopes,
+        auth_url: tiktokAuthUrl.toString(),
+      })
+    }
+
     const response = NextResponse.redirect(tiktokAuthUrl.toString())
 
     // Guarda state e verifier em cookies para validação no callback

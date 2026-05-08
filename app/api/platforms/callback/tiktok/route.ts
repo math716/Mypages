@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(new URL("/pages?error=config_missing", request.url))
     }
 
-    const baseUrl = process.env.NEXTAUTH_URL || `http://localhost:${process.env.PORT || 3000}`
+    const baseUrl = (process.env.NEXTAUTH_URL || `http://localhost:${process.env.PORT || 3000}`).replace(/\/$/, "")
     const redirectUri = `${baseUrl}/api/platforms/callback/tiktok`
 
     // Passo 1: Troca o code pelo access token
