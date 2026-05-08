@@ -32,8 +32,7 @@ export async function GET(request: NextRequest) {
     const baseUrl = process.env.NEXTAUTH_URL || `http://localhost:${process.env.PORT || 3000}`
     const redirectUri = `${baseUrl}/api/platforms/callback/tiktok`
 
-    // user.info.stats requires extra approval; start with basic only
-    const scopes = "user.info.basic"
+    const scopes = "user.info.basic,user.info.stats"
 
     const tiktokAuthUrl = new URL("https://www.tiktok.com/v2/auth/authorize/")
     tiktokAuthUrl.searchParams.set("client_key", clientKey)
